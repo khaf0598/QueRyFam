@@ -1,8 +1,9 @@
 <template>
   <div>
-    <v-data-table :headers="headers" :items="catParentescos">
+    <v-data-table :headers="headers" :items="catParentescos" :search="search">
       <template v-slot:top>
         <div class="d-flex justify-center">
+          <v-text-field v-model="search" v-bind="inputSearch"/>
           <v-tooltip bottom>
             <template v-slot:activator="{ attrs, on }">
               <v-btn v-bind="attrs" v-on="on" icon class="ml-auto mr-5 mt-5" @click="getParentescos()">
@@ -96,6 +97,14 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      inputSearch: {
+				clearable: true,
+				class: "v-input__slot",
+				label: "Buscar",
+				clearIcon: 'mdi-close-circle',
+				appendIcon: 'mdi-magnify',
+				hideDetails: true,
+			},
       inputText: {
         outlined: false,
         dense: false,
@@ -110,6 +119,7 @@ export default {
         ],
       },
 
+      search: "",
       headers: [
         {
           text: "Parentesco",

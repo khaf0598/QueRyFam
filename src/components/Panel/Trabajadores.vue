@@ -1,8 +1,9 @@
 <template>
   <div>
-    <v-data-table :headers="headers" :items="catTrabajadores">
+    <v-data-table :headers="headers" :items="catTrabajadores" :search="search">
       <template v-slot:top>
         <div class="d-flex justify-center">
+          <v-text-field v-model="search" v-bind="inputSearch"/>
           <v-tooltip bottom>
             <template v-slot:activator="{ attrs, on }">
               <v-btn v-bind="attrs" v-on="on" icon class="ml-auto mr-5 mt-5" @click="getTrabajadores()">
@@ -23,9 +24,9 @@
         </div>
       </template>
 
-      <template v-slot:[`item.nombreCompleto`]="{ item }">
+      <!--<template v-slot:[`item.nombreCompleto`]="{ item }">
         {{ item.nombre }} {{ item.apellidoP }} {{ item.apellidoM }}
-      </template>
+      </template>-->
 
       <template v-slot:[`item.acciones`]="{ item }">
         <v-tooltip bottom>
@@ -336,6 +337,14 @@ import axios from 'axios'
 export default {
   data() {
     return {
+      inputSearch: {
+				clearable: true,
+				class: "v-input__slot",
+				label: "Buscar",
+				clearIcon: 'mdi-close-circle',
+				appendIcon: 'mdi-magnify',
+				hideDetails: true,
+			},
       inputText: {
         outlined: false,
         dense: false,
@@ -427,10 +436,26 @@ export default {
         ],
       },
 
+      search: "",
       headers: [
-        {
+        /*{
           text: "Nombre Completo",
           value: "nombreCompleto",
+          align: "center",
+          sortable: true,
+        },*/{
+          text: "Nombre",
+          value: "nombre",
+          align: "center",
+          sortable: true,
+        }, {
+          text: "Apellido Paterno",
+          value: "apellidoP",
+          align: "center",
+          sortable: true,
+        }, {
+          text: "Apellido Materno",
+          value: "apellidoM",
           align: "center",
           sortable: true,
         }, {
@@ -738,7 +763,7 @@ export default {
       /*this.getDatosQr(item.idQR)
       this.dialogPreview = true;*/
       let idQr = item.idQR
-      this.$router.push({ name: 'Visualizar', params: { id: 15 } });
+      this.$router.push({ name: 'Visualizar', params: { id: idQr } });
     },
     closeDialogPreview() {
       this.dialogPreview = false;

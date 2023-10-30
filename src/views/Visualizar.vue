@@ -9,13 +9,12 @@
     <div class="cont-data">
       <!--<v-img v-if="dataUser.foto" :src="dataUser.foto" class="img-foto" height="200" width="200" />-->
       <v-card width="100%">
-        <v-card-title class=" d-flex justify-center">
+        <v-card-title class="d-flex justify-center">
           <v-row>
-            <v-col cols="12">
+            <v-col cols="12" class="d-flex justify-center">
               <v-icon>mdi-cellphone</v-icon> {{ dataUser.numCelular }}
             </v-col>
             <v-col cols="12">
-              {{ dataUser.familiares }}
               <v-simple-table>
                 <template>
                   <thead>

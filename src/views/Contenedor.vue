@@ -53,14 +53,6 @@
         </v-list-item>
 
       </v-list-item-group>
-      <v-list-item @click="cerrarSesion">
-        <v-list-item-icon>
-          <v-icon>mdi-logout</v-icon> <!-- Icono de salida, puedes usar otro si lo prefieres -->
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title>Cerrar Sesión</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
     </v-navigation-drawer>
     <router-view class="my-router-view" />
   </div>

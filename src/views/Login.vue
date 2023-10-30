@@ -1,7 +1,7 @@
 <template>
   <div class="my-login-div">
     <v-card class="my-form-login" cols="12" xl="12" lg="12" md="12" sm="12">
-      <v-card-title>Inicio de Sesión</v-card-title>
+      <v-card-title>Login</v-card-title>
       <v-card-text>
         <v-form ref="form">
           <v-row>
@@ -14,7 +14,7 @@
                 v-bind="inputPassword" />
             </v-col>
             <v-col cols="12" class="d-flex" justify-center>
-              <v-btn class="my-btn ml-auto mr-auto" color="primary" @click="validarLogin()">INGRESAR</v-btn>
+              <v-btn class="my-btn ml-auto mr-auto" color="primary" @click="validarLogin()">Ingresar</v-btn>
             </v-col>
           </v-row>
         </v-form>
