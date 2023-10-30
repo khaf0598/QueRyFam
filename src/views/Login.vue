@@ -6,11 +6,11 @@
         <v-form ref="form">
           <v-row>
             <v-col cols="12">
-              <v-text-field v-model="dataLogin.usuario" label="Usuario" prepend-inner-icon="mdi-account"
+              <v-text-field v-model="dataLogin.usuario" label="User" prepend-inner-icon="mdi-account"
                 v-bind="inputUsuario" />
             </v-col>
             <v-col cols="12">
-              <v-text-field v-model="dataLogin.contrasena" label="Contraseña" prepend-inner-icon="mdi-key"
+              <v-text-field v-model="dataLogin.contrasena" label="Password" prepend-inner-icon="mdi-key"
                 v-bind="inputPassword" />
             </v-col>
             <v-col cols="12" class="d-flex" justify-center>
