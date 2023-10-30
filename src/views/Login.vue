@@ -14,7 +14,7 @@
                 v-bind="inputPassword" />
             </v-col>
             <v-col cols="12" class="d-flex" justify-center>
-              <v-btn class="my-btn ml-auto mr-auto" color="primary" @click="validarLogin()">Ingresar</v-btn>
+              <v-btn class="my-btn ml-auto mr-auto" color="primary" @click="validarLogin()">ENTRAR</v-btn>
             </v-col>
           </v-row>
         </v-form>
