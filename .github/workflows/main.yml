@@ -14,3 +14,4 @@ jobs:
         server: ftp.d4me.com.mx
         username: khaf@visorqr.d4me.com.mx
         password: ${{ secrets.FTPPLESK }}
+        local-dir: dist/
