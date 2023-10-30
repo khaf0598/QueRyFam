@@ -3,7 +3,7 @@
     <v-data-table :headers="headers" :items="catTrabajadores" :search="search">
       <template v-slot:top>
         <div class="d-flex justify-center">
-          <v-text-field v-model="search" v-bind="inputSearch"/>
+          <v-text-field v-model="search" v-bind="inputSearch" />
           <v-tooltip bottom>
             <template v-slot:activator="{ attrs, on }">
               <v-btn v-bind="attrs" v-on="on" icon class="ml-auto mr-5 mt-5" @click="getTrabajadores()">
@@ -338,13 +338,13 @@ export default {
   data() {
     return {
       inputSearch: {
-				clearable: true,
-				class: "v-input__slot",
-				label: "Buscar",
-				clearIcon: 'mdi-close-circle',
-				appendIcon: 'mdi-magnify',
-				hideDetails: true,
-			},
+        clearable: true,
+        class: "v-input__slot",
+        label: "Buscar",
+        clearIcon: 'mdi-close-circle',
+        appendIcon: 'mdi-magnify',
+        hideDetails: true,
+      },
       inputText: {
         outlined: false,
         dense: false,
@@ -630,6 +630,7 @@ export default {
       dialog2: false,
       dialogDelete: false,
       dialogPreview: false,
+      token: null
     }
   },
   methods: {
@@ -639,8 +640,14 @@ export default {
       this.getParentescos();
     },
     getTrabajadores() {
-      axios
-        .get("Trabajador/Listar")
+      const axiosInstance = axios.create({
+        baseURL: 'https://aavisor.azurewebsites.net/api',
+        headers: {
+          'Authorization': this.token
+        }
+      });
+      axiosInstance.
+        get("Trabajador/Listar")
         .then((response) => {
           this.catTrabajadores = response.data;
         })
@@ -686,8 +693,14 @@ export default {
         })
     },
     getPuestos() {
-      axios
-        .get("Puesto/Listar")
+      const axiosInstance = axios.create({
+        baseURL: 'https://aavisor.azurewebsites.net/api',
+        headers: {
+          'Authorization': this.token
+        }
+      });
+      axiosInstance.
+        get("Puesto/Listar")
         .then((response) => {
           this.catPuestos = response.data;
         })
@@ -696,7 +709,13 @@ export default {
         })
     },
     getParentescos() {
-      axios
+      const axiosInstance = axios.create({
+        axiosInstance: 'https://aavisor.azurewebsites.net/api',
+        headers: {
+          'Authorization': this.token
+        }
+      });
+      axiosInstance
         .get("Parentesco/Listar")
         .then((response) => {
           this.catParentescos = response.data
@@ -706,7 +725,13 @@ export default {
         })
     },
     getDatosQr(idQr) {
-      axios.
+      const axiosInstance = axios.create({
+        axiosInstance: 'https://aavisor.azurewebsites.net/api',
+        headers: {
+          'Authorization': this.token
+        }
+      });
+      axiosInstance.
         get("Trabajador/Buscar/" + idQr)
         .then((response) => {
           this.userPreview = Object.assign({}, response.data)
@@ -840,6 +865,7 @@ export default {
     },
   },
   mounted() {
+    this.token = localStorage.getItem('token')
     this.mountedComponente();
   }
 }

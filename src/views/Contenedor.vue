@@ -100,14 +100,14 @@ export default {
           break;
 
         case 1:
-          if (seccion != 'Parentescos') {
-            this.$router.push({ name: 'Parentescos' });
+          if (seccion != 'Puestos') {
+            this.$router.push({ name: 'Puestos' });
           }
           break;
 
         case 2:
-          if (seccion != 'Puestos') {
-            this.$router.push({ name: 'Puestos' });
+          if (seccion != 'Parentescos') {
+            this.$router.push({ name: 'Parentescos' });
           }
           break;
         case 3:
