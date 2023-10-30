@@ -5,15 +5,15 @@
       <v-card-text>
         <v-form ref="form">
           <v-row>
-            <v-col cols="12">
+            <v-col cols="8">
               <v-text-field v-model="dataLogin.usuario" label="User" prepend-inner-icon="mdi-account"
                 v-bind="inputUsuario" />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="8">
               <v-text-field v-model="dataLogin.contrasena" label="Password" prepend-inner-icon="mdi-key"
                 v-bind="inputPassword" />
             </v-col>
-            <v-col cols="12" class="d-flex" justify-center>
+            <v-col cols="8" class="d-flex" justify-center>
               <v-btn class="my-btn ml-auto mr-auto" color="primary" @click="validarLogin()">ENTRAR</v-btn>
             </v-col>
           </v-row>
