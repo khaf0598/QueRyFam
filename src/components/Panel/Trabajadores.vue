@@ -710,13 +710,13 @@ export default {
     },
     getParentescos() {
       const axiosInstance = axios.create({
-        axiosInstance: 'https://aavisor.azurewebsites.net/api',
+        baseURL: 'https://aavisor.azurewebsites.net/api',
         headers: {
           'Authorization': this.token
         }
       });
-      axiosInstance
-        .get("Parentesco/Listar")
+      axiosInstance.
+        get("Parentesco/Listar")
         .then((response) => {
           this.catParentescos = response.data
         })
