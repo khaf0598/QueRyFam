@@ -259,6 +259,7 @@
     </v-dialog>
 
     <!--<v-dialog v-model="dialog2" width="800" persistent>
+
         <v-card>
           <v-img height="170px" src="../assets/wave.svg">
             <v-img height="170px" src="../assets/wave1.svg">
@@ -334,13 +335,18 @@
           </v-card-actions>
         </v-card>
       </v-dialog>-->
+    <MiAlerta ref="MiAlerta" />
   </div>
 </template>
   
 <script>
 import axios from "axios";
+import MiAlerta from '@/MiAlerta.vue';
 
 export default {
+  components: {
+    MiAlerta
+  },
   data() {
     return {
       inputSearch: {
@@ -680,12 +686,14 @@ export default {
       axios
         .post("Trabajador/Crear", this.user)
         .then((response) => {
+          this.miAlerta(200);
           this.getTrabajadores();
           this.closeDialog();
           this.closeDialog2();
         })
         .catch((error) => {
           console.log(error);
+          this.miAlerta(500);
         })
         .finally(() => {
           this.loadingDialog = false;
@@ -709,12 +717,14 @@ export default {
           familiares: this.user.familiares,
         })
         .then((response) => {
+          this.miAlerta(200);
           this.getTrabajadores();
           this.closeDialog();
           this.closeDialog2();
         })
         .catch((error) => {
           console.log(error);
+          this.miAlerta(500);
         })
         .finally(() => {
           this.loadingDialog = false;
@@ -725,11 +735,13 @@ export default {
       axios
         .put("Trabajador/Desactivar/" + this.idTrabajador)
         .then((response) => {
+          this.miAlerta(200);
           this.getTrabajadores();
           this.closeDialogDelete();
         })
         .catch((error) => {
           console.log(error);
+          this.miAlerta(500);
         })
         .finally(() => {
           this.loadingDelete = false;
@@ -874,6 +886,10 @@ export default {
     deleteFamiliar(item) {
       const idx = this.user.familiares.indexOf(item);
       this.user.familiares.splice(idx, 1);
+    },
+
+    miAlerta(code) {
+      this.$refs.MiAlerta.mostrar(code);
     },
   },
   mounted() {

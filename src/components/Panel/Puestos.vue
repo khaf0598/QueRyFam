@@ -89,13 +89,19 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <MiAlerta ref="MiAlerta" />
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import MiAlerta from '@/MiAlerta.vue';
 
 export default {
+  components: {
+    MiAlerta
+  },
   data() {
     return {
       inputSearch: {
@@ -197,11 +203,13 @@ export default {
       axios
         .post("Puesto/Crear", this.puesto)
         .then((response) => {
+          this.miAlerta(200)
           this.getPuestos();
-          this.dialog = false;
+          this.closeDialog()
         })
         .catch((error) => {
           console.log(error)
+          this.miAlerta(500)
         })
         .finally(() => {
           this.loadingDialog = false;
@@ -212,11 +220,13 @@ export default {
       axios
         .put("Puesto/Actualizar/" + this.idPuesto, this.puesto)
         .then((response) => {
+          this.miAlerta(200)
           this.getPuestos();
-          this.dialog = false;
+          this.closeDialog()
         })
         .catch((error) => {
           console.log(error)
+          this.miAlerta(500)
         })
         .finally(() => {
           this.loadingDialog = false;
@@ -227,11 +237,13 @@ export default {
       axios
         .put("Puesto/Desactivar/" + this.idPuesto)
         .then((response) => {
+          this.miAlerta(200)
           this.getPuestos();
-          this.dialogDelete = false;
+          this.closeDialogDelete()
         })
         .catch((error) => {
           console.log(error)
+          this.miAlerta(500)
         })
         .finally(() => {
           this.loadingDelete = false;
@@ -268,6 +280,10 @@ export default {
     closeDialogDelete() {
       this.dialogDelete = false;
       this.puestoDelete = Object.assign({}, this.defaultPuesto);
+    },
+
+    miAlerta(code) {
+      this.$refs.MiAlerta.mostrar(code);
     },
   },
   mounted() {

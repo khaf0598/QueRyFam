@@ -90,13 +90,19 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <MiAlerta ref="MiAlerta"/>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import MiAlerta from '@/MiAlerta.vue';
 
 export default {
+  components: {
+    MiAlerta
+  },
   data() {
     return {
       inputSearch: {
@@ -197,11 +203,13 @@ export default {
       axios
         .post("Parentesco/Crear", this.parentesco)
         .then((response) => {
+          this.miAlerta(200);
           this.getParentescos();
-          this.dialog = false;
+          this.closeDialog()
         })
         .catch((error) => {
-          console.log(error)
+          console.log(error);
+          this.miAlerta(500)
         })
         .finally(() => {
           this.loadingDialog = false;
@@ -212,11 +220,13 @@ export default {
       axios
         .put("Parentesco/Actualizar/" + this.idParentesco, this.parentesco)
         .then((response) => {
+          this.miAlerta(200);
           this.getParentescos();
-          this.dialog = false;
+          this.closeDialog()
         })
         .catch((error) => {
-          console.log(error)
+          console.log(error);
+          this.miAlerta(500)
         })
         .finally(() => {
           this.loadingDialog = false;
@@ -227,11 +237,13 @@ export default {
       axios
         .put("Parentesco/Desactivar/" + this.idParentesco)
         .then((response) => {
+          this.miAlerta(200);
           this.getParentescos();
-          this.dialogDelete = false;
+          this.closeDialogDelete()
         })
         .catch((error) => {
-          console.log(error)
+          console.log(error);
+          this.miAlerta(500)
         })
         .finally(() => {
           this.loadingDelete = false;
@@ -268,6 +280,10 @@ export default {
     closeDialogDelete() {
       this.dialogDelete = false;
       this.parentescoDelete = Object.assign({}, this.defaultParentesco);
+    },
+
+    miAlerta(code){
+      this.$refs.MiAlerta.mostrar(code);
     },
   },
   mounted() {

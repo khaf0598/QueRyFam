@@ -12,8 +12,9 @@
               </v-col>
               <v-col cols="12">
                 <v-text-field v-model="dataLogin.contrasena" label="Contraseña" prepend-inner-icon="mdi-key"
-                  v-bind="inputPassword" :type="showPassword ? 'text' : 'password'" :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                  @click:append="showPassword = !showPassword" :loading="loadingLogin" />
+                  v-bind="inputPassword" :type="showPassword ? 'text' : 'password'"
+                  :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'" @click:append="showPassword = !showPassword"
+                  :loading="loadingLogin" />
               </v-col>
               <v-col cols="12" class="d-flex" justify-center>
                 <v-btn class="my-btn ml-auto mr-auto" color="primary" @click="validarLogin()"
@@ -24,13 +25,18 @@
         </v-card-text>
       </v-card>
     </v-col>
+    <MiAlerta ref="MiAlerta"/>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import MiAlerta from "@/MiAlerta.vue";
 
 export default {
+  components: {
+    MiAlerta
+  },
   data() {
     return {
       inputUsuario: {
@@ -87,6 +93,8 @@ export default {
         })
         .catch((error) => {
           localStorage.removeItem("token");
+          console.log(error)
+          this.miAlerta(500)
         })
         .finally(() => {
           this.loadingLogin = false;
@@ -94,6 +102,10 @@ export default {
     },
     cambiarLogin() {
       this.$router.push({ name: "Contenedor" });
+    },
+
+    miAlerta(code){
+      this.$refs.MiAlerta.mostrar(code);
     },
   },
 };
