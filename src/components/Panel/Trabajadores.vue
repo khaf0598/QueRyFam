@@ -1,9 +1,9 @@
 <template>
   <div>
-    <v-data-table :headers="headers" :items="catTrabajadores" :search="search">
+    <v-data-table :headers="headers" :items="catTrabajadores" :search="search" :loading="loadingTable">
       <template v-slot:top>
         <div class="d-flex justify-center">
-          <v-text-field v-model="search" v-bind="inputSearch" />
+          <v-text-field v-model="search" v-bind="inputSearch" class="mr-5" />
           <v-tooltip bottom>
             <template v-slot:activator="{ attrs, on }">
               <v-btn v-bind="attrs" v-on="on" icon class="ml-auto mr-5 mt-5" @click="getTrabajadores()">
@@ -67,20 +67,18 @@
       </template>
     </v-data-table>
 
-    <!--<v-btn @click="dialog2 = true">a</v-btn>-->
-
     <v-dialog v-model="dialog" persistent fullscreen hide-overlay transition="dialog-bottom-transition">
       <v-card color="fondo">
         <v-toolbar flat dark color="primary">
           <v-toolbar-title>{{ titleDialog }} Registro</v-toolbar-title>
           <v-toolbar-items class="ml-auto">
-            <v-btn text @click="validationForm()">
+            <v-btn text @click="validationForm()" :loading="loadingDialog">
               <v-icon>mdi-content-save</v-icon>
             </v-btn>
             <v-btn text @click="">
               <v-icon>mdi-eye</v-icon>
             </v-btn>
-            <v-btn dark text @click="closeDialog()">
+            <v-btn dark text @click="closeDialog()" :loading="loadingDialog">
               <v-icon> mdi-close </v-icon>
             </v-btn>
           </v-toolbar-items>
@@ -92,32 +90,38 @@
             <v-card-text>
               <v-row>
                 <v-col cols="12" xl="4" lg="4" md="4" sm="12">
-                  <v-text-field v-model="user.nombre" label="Nombre(s)" class="mr-3" v-bind="inputText" />
+                  <v-text-field v-model="user.nombre" label="Nombre(s)" class="mr-3" v-bind="inputText"
+                    :loading="loadingDialog" />
                 </v-col>
                 <v-col cols="12" xl="4" lg="4" md="4" sm="12">
-                  <v-text-field v-model="user.apellidoP" label="Apellido Paterno" class="mr-3" v-bind="inputText" />
+                  <v-text-field v-model="user.apellidoP" label="Apellido Paterno" class="mr-3" v-bind="inputText"
+                    :loading="loadingDialog" />
                 </v-col>
                 <v-col cols="12" xl="4" lg="4" md="4" sm="12">
-                  <v-text-field v-model="user.apellidoM" label="Apellido Materno" class="mr-3" v-bind="inputText" />
+                  <v-text-field v-model="user.apellidoM" label="Apellido Materno" class="mr-3" v-bind="inputText"
+                    :loading="loadingDialog" />
                 </v-col>
                 <v-col cols="12" xl="4" lg="4" md="4" sm="12">
                   <v-autocomplete v-model="user.idPuesto" :items="catPuestos" item-value="idPuesto" item-text="nombre"
-                    label="Puesto" class="mr-3" v-bind="inputAutocomplete" />
+                    label="Puesto" class="mr-3" v-bind="inputAutocomplete" :loading="loadingDialog" />
                 </v-col>
                 <v-col cols="12" xl="4" lg="4" md="4" sm="12">
-                  <v-text-field v-model="user.numCelular" label="Teléfono Móvil" class="mr-3" v-bind="inputTelMovil" />
+                  <v-text-field v-model="user.numCelular" label="Teléfono Móvil" class="mr-3" v-bind="inputTelMovil"
+                    :loading="loadingDialog" />
                 </v-col>
                 <v-col cols="12" xl="4" lg="4" md="4" sm="12">
                   <v-file-input v-model="fotoBase64" label="Fotografia" class="mr-3" v-if="cambioFoto"
-                    accept="image/png, image/jpeg, image/jpg" v-bind="inputImage" @change="convertToBase64" />
+                    accept="image/png, image/jpeg, image/jpg" v-bind="inputImage" @change="convertToBase64"
+                    :loading="loadingDialog" />
                 </v-col>
               </v-row>
               <v-row>
                 <v-col cols="12" v-if="titleDialog === 'Editar'">
-                  <v-checkbox v-model="cambioFoto" label="Cambiar Imagen" />
+                  <v-checkbox v-model="cambioFoto" label="Cambiar Imagen" :loading="loadingDialog" />
                 </v-col>
                 <v-col cols="12">
-                  <v-img max-height="500" max-width="500" v-if="!cambioFoto && user.foto" :src="user.foto" contain />
+                  <v-img max-height="500" max-width="500" v-if="!cambioFoto && user.foto" :src="user.foto"
+                    :lazy-src="user.foto" contain :loading="loadingDialog" />
                 </v-col>
               </v-row>
             </v-card-text>
@@ -131,26 +135,26 @@
                   <v-data-table :headers="headersFamiliares" :items="user.familiares" hide-default-footer>
                     <template v-slot:top>
                       <div class="d-flex mt-2">
-                        <v-btn color="primary" class="ml-auto" @click="addFamiliar()">
+                        <v-btn color="primary" class="ml-auto" @click="addFamiliar()" :loading="loadingDialog">
                           Agregar
                         </v-btn>
                       </div>
                     </template>
                     <template v-slot:[`item.idParentezco`]="{ item }">
                       <v-autocomplete v-model="item.idParentezco" :items="catParentescos" item-value="idParentesco"
-                        item-text="nombre" v-bind="inputAutocomplete" />
+                        item-text="nombre" v-bind="inputAutocomplete" :loading="loadingDialog" />
                     </template>
                     <template v-slot:[`item.nombre`]="{ item }">
-                      <v-text-field v-model="item.nombre" v-bind="inputText" />
+                      <v-text-field v-model="item.nombre" v-bind="inputText" :loading="loadingDialog" />
                     </template>
                     <template v-slot:[`item.apellidoP`]="{ item }">
-                      <v-text-field v-model="item.apellidoP" v-bind="inputText" />
+                      <v-text-field v-model="item.apellidoP" v-bind="inputText" :loading="loadingDialog" />
                     </template>
                     <template v-slot:[`item.apellidoM`]="{ item }">
-                      <v-text-field v-model="item.apellidoM" v-bind="inputText" />
+                      <v-text-field v-model="item.apellidoM" v-bind="inputText" :loading="loadingDialog" />
                     </template>
                     <template v-slot:[`item.edad`]="{ item }">
-                      <v-text-field v-model="item.edad" v-bind="inputEdad" />
+                      <v-text-field v-model="item.edad" v-bind="inputEdad" :loading="loadingDialog" />
                     </template>
                     <template v-slot:[`item.acciones`]="{ item }">
                       <v-tooltip bottom>
@@ -177,8 +181,9 @@
                     <v-row>
                       <v-col v-for="opcion in opcionesQr" :key="opcion.value" cols="12" xl="3" lg="3" md="3" sm="6">
                         <v-list-item>
-                          <v-radio :value="opcion.value"></v-radio>
-                          <v-img max-height="150" max-width="200" :src="opcion.imageUrl" contain />
+                          <v-radio :value="opcion.value" :loading="loadingDialog" />
+                          <v-img max-height="150" max-width="200" :src="opcion.imageUrl" :lazy-src="opcion.imageUrl"
+                            contain :loading="loadingDialog" />
                         </v-list-item>
                       </v-col>
                     </v-row>
@@ -189,16 +194,17 @@
             <v-card-text class="d-flex align-left">
               <v-checkbox v-model="user.qr.imagenQR" label="El QR lleva logo?" class="mr-3" />
               <v-file-input v-model="qrBase64" v-if="user.qr.imagenQR && cambioFotoQr" class="mr-3"
-                accept="image/png, image/jpeg, image/jpg" v-bind="inputImage" @change="convertQrToBase64" />
+                accept="image/png, image/jpeg, image/jpg" v-bind="inputImage" @change="convertQrToBase64"
+                :loading="loadingDialog" />
             </v-card-text>
             <v-card-text>
               <v-row>
                 <v-col cols="12" v-if="titleDialog === 'Editar'">
-                  <v-checkbox v-model="cambioFotoQr" label="Cambiar Imagen" />
+                  <v-checkbox v-model="cambioFotoQr" label="Cambiar Imagen" :loading="loadingDialog" />
                 </v-col>
                 <v-col cols="12">
                   <v-img max-height="500" max-width="500" v-if="!cambioFotoQr && user.qr.urlImagenQR"
-                    :src="user.qr.urlImagenQR" contain />
+                    :src="user.qr.urlImagenQR" :lazy-src="user.qr.urlImagenQR" contain :loading="loadingDialog" />
                 </v-col>
               </v-row>
             </v-card-text>
@@ -213,8 +219,8 @@
         <v-card-title>Se eliminará a "{{ userDelete.nombre }} {{ userDelete.apellidoP }}
           {{ userDelete.apellidoM }}"</v-card-title>
         <v-card-actions>
-          <v-btn text color="success" @click="closeDialogDelete()">Cancelar</v-btn>
-          <v-btn text color="error" @click="deleteTrabajador()">Eliminar</v-btn>
+          <v-btn text color="success" @click="closeDialogDelete()" :loading="loadingDelete">Cancelar</v-btn>
+          <v-btn text color="error" @click="deleteTrabajador()" :loading="loadingDelete">Eliminar</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -643,7 +649,10 @@ export default {
       dialog2: false,
       dialogDelete: false,
       dialogPreview: false,
-      token: null,
+
+      loadingTable: false,
+      loadingDialog: false,
+      loadingDelete: false,
     };
   },
   methods: {
@@ -653,6 +662,7 @@ export default {
       this.getParentescos();
     },
     getTrabajadores() {
+      this.loadingTable = true;
       axios
         .get("Trabajador/Listar")
         .then((response) => {
@@ -660,9 +670,13 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-        });
+        })
+        .finally(() => {
+          this.loadingTable = false;
+        })
     },
     postTrabajadores() {
+      this.loadingDialog = true;
       axios
         .post("Trabajador/Crear", this.user)
         .then((response) => {
@@ -672,25 +686,42 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-        });
+        })
+        .finally(() => {
+          this.loadingDialog = false;
+        })
     },
     putTrabajadores() {
-      (this.user.foto = this.cambioFoto ? this.user.foto : null),
-        (this.user.qr.urlImagenQR = this.cambioFotoQr
-          ? this.user.qr.urlImagenQR
-          : null),
-        axios
-          .put("Trabajador/Actualizar/" + this.idTrabajador, this.user)
-          .then((response) => {
-            this.getTrabajadores();
-            this.closeDialog();
-            this.closeDialog2();
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+      this.loadingDialog = true;
+      axios
+        .put("Trabajador/Actualizar/" + this.idTrabajador, {
+          nombre: this.user.nombre,
+          apellidoP: this.user.apellidoP,
+          apellidoM: this.user.apellidoM,
+          idPuesto: this.user.idPuesto,
+          numCelular: this.user.numCelular,
+          foto: this.cambioFoto ? this.user.foto : null,
+          qr: {
+            tipoQR: this.user.qr.tipoQR,
+            imagenQR: this.user.qr.imagenQR,
+            urlImagenQR: this.cambioFotoQr ? this.user.qr.urlImagenQR : null
+          },
+          familiares: this.user.familiares,
+        })
+        .then((response) => {
+          this.getTrabajadores();
+          this.closeDialog();
+          this.closeDialog2();
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          this.loadingDialog = false;
+        })
     },
     deleteTrabajador() {
+      this.loadingDelete = true;
       axios
         .put("Trabajador/Desactivar/" + this.idTrabajador)
         .then((response) => {
@@ -699,7 +730,10 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-        });
+        })
+        .finally(() => {
+          this.loadingDelete = false;
+        })
     },
     getPuestos() {
       axios
@@ -716,19 +750,6 @@ export default {
         .get("Parentesco/Listar")
         .then((response) => {
           this.catParentescos = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    getDatosQr(idQr) {
-      axios
-        .get("Trabajador/Buscar/" + idQr)
-        .then((response) => {
-          this.userPreview = Object.assign({}, response.data);
-          this.userPreview.familiares = JSON.parse(
-            JSON.stringify(response.data.familiares)
-          );
         })
         .catch((error) => {
           console.log(error);
@@ -780,8 +801,6 @@ export default {
     },
 
     openPreview(item) {
-      /*this.getDatosQr(item.idQR)
-      this.dialogPreview = true;*/
       let idQr = item.idQR;
       this.$router.push({ name: "Visualizar", params: { id: idQr } });
     },
@@ -815,7 +834,6 @@ export default {
     },
     closeDialog2() {
       this.dialog2 = false;
-      //this.$refs.form.reset();
       this.user = Object.assign({}, this.defaultUser);
       this.user.familiares = [];
       this.idFamiliar = 0;
@@ -859,7 +877,6 @@ export default {
     },
   },
   mounted() {
-    this.token = localStorage.getItem("token");
     this.mountedComponente();
   },
 };

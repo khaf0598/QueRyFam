@@ -8,14 +8,16 @@
             <v-row>
               <v-col cols="12">
                 <v-text-field v-model="dataLogin.usuario" label="Usuario" prepend-inner-icon="mdi-account"
-                  v-bind="inputUsuario" />
+                  v-bind="inputUsuario" :loading="loadingLogin" />
               </v-col>
               <v-col cols="12">
                 <v-text-field v-model="dataLogin.contrasena" label="Contraseña" prepend-inner-icon="mdi-key"
-                  v-bind="inputPassword" />
+                  v-bind="inputPassword" :type="showPassword ? 'text' : 'password'" :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                  @click:append="showPassword = !showPassword" :loading="loadingLogin" />
               </v-col>
               <v-col cols="12" class="d-flex" justify-center>
-                <v-btn class="my-btn ml-auto mr-auto" color="primary" @click="validarLogin()">Ingresar</v-btn>
+                <v-btn class="my-btn ml-auto mr-auto" color="primary" @click="validarLogin()"
+                  :loading="loadingLogin">Ingresar</v-btn>
               </v-col>
             </v-row>
           </v-form>
@@ -63,6 +65,8 @@ export default {
         usuario: null,
         contrasena: null,
       },
+      loadingLogin: false,
+      showPassword: false,
     };
   },
   methods: {
@@ -72,6 +76,7 @@ export default {
       }
     },
     postLogin() {
+      this.loadingLogin = true;
       axios
         .post("Authentication/Login", this.dataLogin)
         .then((response) => {
@@ -82,7 +87,10 @@ export default {
         })
         .catch((error) => {
           localStorage.removeItem("token");
-        });
+        })
+        .finally(() => {
+          this.loadingLogin = false;
+        })
     },
     cambiarLogin() {
       this.$router.push({ name: "Contenedor" });
