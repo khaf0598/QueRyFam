@@ -81,16 +81,14 @@
               <v-icon>mdi-eye</v-icon>
             </v-btn>
             <v-btn dark text @click="closeDialog()">
-              <v-icon>
-                mdi-close
-              </v-icon>
+              <v-icon> mdi-close </v-icon>
             </v-btn>
           </v-toolbar-items>
         </v-toolbar>
 
         <v-form ref="form">
           <v-card class="my-card" elevation="5">
-            <v-card-title>Datos Personales &#160;<span style="color: red;">*</span></v-card-title>
+            <v-card-title>Datos Personales &#160;<span style="color: red">*</span></v-card-title>
             <v-card-text>
               <v-row>
                 <v-col cols="12" xl="4" lg="4" md="4" sm="12">
@@ -126,7 +124,7 @@
           </v-card>
 
           <v-card class="my-card" elevation="5">
-            <v-card-title>Datos de familiares &#160;<span style="color: red;">*</span></v-card-title>
+            <v-card-title>Datos de familiares &#160;<span style="color: red">*</span></v-card-title>
             <v-card-text>
               <v-row>
                 <v-col cols="12">
@@ -171,7 +169,7 @@
           </v-card>
 
           <v-card class="my-card" elevation="5">
-            <v-card-title>Tipo de QR &#160;<span style="color: red;">*</span></v-card-title>
+            <v-card-title>Tipo de QR &#160;<span style="color: red">*</span></v-card-title>
             <v-card-text>
               <v-row>
                 <v-col cols="12">
@@ -205,15 +203,15 @@
               </v-row>
             </v-card-text>
           </v-card>
-          <div style="height: 30px;"></div>
+          <div style="height: 30px"></div>
         </v-form>
       </v-card>
     </v-dialog>
 
     <v-dialog v-model="dialogDelete" persistent width="500">
       <v-card>
-        <v-card-title>Se eliminará a "{{ userDelete.nombre }} {{ userDelete.apellidoP }} {{ userDelete.apellidoM
-        }}"</v-card-title>
+        <v-card-title>Se eliminará a "{{ userDelete.nombre }} {{ userDelete.apellidoP }}
+          {{ userDelete.apellidoM }}"</v-card-title>
         <v-card-actions>
           <v-btn text color="success" @click="closeDialogDelete()">Cancelar</v-btn>
           <v-btn text color="error" @click="deleteTrabajador()">Eliminar</v-btn>
@@ -227,27 +225,29 @@
           <v-toolbar-title>Datos de {{ userPreview.nombre }}</v-toolbar-title>
           <v-toolbar-items class="ml-auto">
             <v-btn dark text @click="closeDialogPreview()">
-              <v-icon>
-                mdi-close
-              </v-icon>
+              <v-icon> mdi-close </v-icon>
             </v-btn>
           </v-toolbar-items>
         </v-toolbar>
 
         <v-card class="mx-auto">
           <v-card dark class="d-flex justify-center">
-            <v-img class="img-user-preview"
-              style="position: absolute; top: 10px; border-radius: 50%; width: 200px; height: 200px; z-index: 2;"
-              :src="userPreview.foto" />
+            <v-img class="img-user-preview" style="
+                position: absolute;
+                top: 10px;
+                border-radius: 50%;
+                width: 200px;
+                height: 200px;
+                z-index: 2;
+              " :src="userPreview.foto" />
 
             <v-img src="https://cdn.vuetifyjs.com/images/cards/forest.jpg"
               gradient="to top, rgba(0,0,0,.44), rgba(0,0,0,.44)" height="220" />
           </v-card>
           <v-card-title class="d-flex justify-center mt-150">
-            {{ userPreview.nombre }} {{ userPreview.apellidoP }} {{ userPreview.apellidoM }} ({{ userPreview.puesto }})
+            {{ userPreview.nombre }} {{ userPreview.apellidoP }}
+            {{ userPreview.apellidoM }} ({{ userPreview.puesto }})
           </v-card-title>
-
-
         </v-card>
       </v-card>
     </v-dialog>
@@ -332,7 +332,7 @@
 </template>
   
 <script>
-import axios from 'axios'
+import axios from "axios";
 
 export default {
   data() {
@@ -341,8 +341,8 @@ export default {
         clearable: true,
         class: "v-input__slot",
         label: "Buscar",
-        clearIcon: 'mdi-close-circle',
-        appendIcon: 'mdi-magnify',
+        clearIcon: "mdi-close-circle",
+        appendIcon: "mdi-magnify",
         hideDetails: true,
       },
       inputText: {
@@ -443,36 +443,41 @@ export default {
           value: "nombreCompleto",
           align: "center",
           sortable: true,
-        },*/{
+        },*/ {
           text: "Nombre",
           value: "nombre",
           align: "center",
           sortable: true,
-        }, {
+        },
+        {
           text: "Apellido Paterno",
           value: "apellidoP",
           align: "center",
           sortable: true,
-        }, {
+        },
+        {
           text: "Apellido Materno",
           value: "apellidoM",
           align: "center",
           sortable: true,
-        }, {
+        },
+        {
           text: "Puesto",
           value: "puesto",
           align: "center",
           sortable: true,
-        }, {
+        },
+        {
           text: "Celular",
           value: "numCelular",
           align: "center",
           sortable: true,
-        }, {
+        },
+        {
           value: "acciones",
           align: "center",
           sortable: false,
-        }
+        },
       ],
       headersFamiliares: [
         {
@@ -480,31 +485,36 @@ export default {
           value: "idParentezco",
           align: "center",
           sortable: false,
-        }, {
+        },
+        {
           text: "Nombre(s)",
           value: "nombre",
           align: "center",
           sortable: false,
-        }, {
+        },
+        {
           text: "Apellido Paterno",
           value: "apellidoP",
           align: "center",
           sortable: false,
-        }, {
+        },
+        {
           text: "Apellido Materno",
           value: "apellidoM",
           align: "center",
           sortable: false,
-        }, {
+        },
+        {
           text: "Edad",
           value: "edad",
           align: "center",
           sortable: false,
-        }, {
+        },
+        {
           value: "acciones",
           align: "center",
           sortable: false,
-        }
+        },
       ],
 
       catTrabajadores: [],
@@ -573,9 +583,9 @@ export default {
             nombre: null,
             apellidoP: null,
             apellidoM: null,
-            edad: null
-          }
-        ]
+            edad: null,
+          },
+        ],
       },
       userPreviewDefault: {
         idTrabajador: null,
@@ -595,9 +605,9 @@ export default {
             nombre: null,
             apellidoP: null,
             apellidoM: null,
-            edad: null
-          }
-        ]
+            edad: null,
+          },
+        ],
       },
 
       idTrabajador: null,
@@ -614,13 +624,16 @@ export default {
         {
           value: 1,
           imageUrl: "https://aavisor.azurewebsites.net/QRs/Plantillas/Qr1.png",
-        }, {
+        },
+        {
           value: 2,
           imageUrl: "https://aavisor.azurewebsites.net/QRs/Plantillas/Qr2.png",
-        }, {
+        },
+        {
           value: 3,
           imageUrl: "https://aavisor.azurewebsites.net/QRs/Plantillas/Qr3.png",
-        }, {
+        },
+        {
           value: 4,
           imageUrl: "https://aavisor.azurewebsites.net/QRs/Plantillas/Qr4.png",
         },
@@ -630,8 +643,8 @@ export default {
       dialog2: false,
       dialogDelete: false,
       dialogPreview: false,
-      token: null
-    }
+      token: null,
+    };
   },
   methods: {
     mountedComponente() {
@@ -640,20 +653,14 @@ export default {
       this.getParentescos();
     },
     getTrabajadores() {
-      const axiosInstance = axios.create({
-        baseURL: 'https://aavisor.azurewebsites.net/api',
-        headers: {
-          'Authorization': this.token
-        }
-      });
-      axiosInstance.
-        get("Trabajador/Listar")
+      axios
+        .get("Trabajador/Listar")
         .then((response) => {
           this.catTrabajadores = response.data;
         })
         .catch((error) => {
-          console.log(error)
-        })
+          console.log(error);
+        });
     },
     postTrabajadores() {
       axios
@@ -664,12 +671,14 @@ export default {
           this.closeDialog2();
         })
         .catch((error) => {
-          console.log(error)
-        })
+          console.log(error);
+        });
     },
     putTrabajadores() {
-      this.user.foto = this.cambioFoto ? this.user.foto : null,
-        this.user.qr.urlImagenQR = this.cambioFotoQr ? this.user.qr.urlImagenQR : null,
+      (this.user.foto = this.cambioFoto ? this.user.foto : null),
+        (this.user.qr.urlImagenQR = this.cambioFotoQr
+          ? this.user.qr.urlImagenQR
+          : null),
         axios
           .put("Trabajador/Actualizar/" + this.idTrabajador, this.user)
           .then((response) => {
@@ -678,8 +687,8 @@ export default {
             this.closeDialog2();
           })
           .catch((error) => {
-            console.log(error)
-          })
+            console.log(error);
+          });
     },
     deleteTrabajador() {
       axios
@@ -689,62 +698,48 @@ export default {
           this.closeDialogDelete();
         })
         .catch((error) => {
-          console.log(error)
-        })
+          console.log(error);
+        });
     },
     getPuestos() {
-      const axiosInstance = axios.create({
-        baseURL: 'https://aavisor.azurewebsites.net/api',
-        headers: {
-          'Authorization': this.token
-        }
-      });
-      axiosInstance.
-        get("Puesto/Listar")
+      axios
+        .get("Puesto/Listar")
         .then((response) => {
           this.catPuestos = response.data;
         })
         .catch((error) => {
-          console.log(error)
-        })
+          console.log(error);
+        });
     },
     getParentescos() {
-      const axiosInstance = axios.create({
-        baseURL: 'https://aavisor.azurewebsites.net/api',
-        headers: {
-          'Authorization': this.token
-        }
-      });
-      axiosInstance.
-        get("Parentesco/Listar")
+      axios
+        .get("Parentesco/Listar")
         .then((response) => {
-          this.catParentescos = response.data
+          this.catParentescos = response.data;
         })
         .catch((error) => {
-          console.log(error)
-        })
+          console.log(error);
+        });
     },
     getDatosQr(idQr) {
-      const axiosInstance = axios.create({
-        axiosInstance: 'https://aavisor.azurewebsites.net/api',
-        headers: {
-          'Authorization': this.token
-        }
-      });
-      axiosInstance.
-        get("Trabajador/Buscar/" + idQr)
+      axios
+        .get("Trabajador/Buscar/" + idQr)
         .then((response) => {
-          this.userPreview = Object.assign({}, response.data)
-          this.userPreview.familiares = JSON.parse(JSON.stringify(response.data.familiares))
+          this.userPreview = Object.assign({}, response.data);
+          this.userPreview.familiares = JSON.parse(
+            JSON.stringify(response.data.familiares)
+          );
         })
         .catch((error) => {
-          console.log(error)
-        })
+          console.log(error);
+        });
     },
 
     validationForm() {
       if (this.$refs.form.validate()) {
-        this.titleDialog === "Nuevo" ? this.postTrabajadores() : this.putTrabajadores();
+        this.titleDialog === "Nuevo"
+          ? this.postTrabajadores()
+          : this.putTrabajadores();
       }
     },
 
@@ -757,7 +752,7 @@ export default {
       if (item) {
         this.cambioFoto = false;
         this.cambioFotoQr = false;
-        this.idTrabajador = item.idTrabajador
+        this.idTrabajador = item.idTrabajador;
         this.user = Object.assign({}, item);
         this.user.familiares = JSON.parse(JSON.stringify(item.familiares));
         this.user.qr = Object.assign({}, item.qr);
@@ -766,7 +761,7 @@ export default {
     closeDialog() {
       this.dialog = false;
       this.user = Object.assign({}, this.defaultUser);
-      this.user.familiares = JSON.parse(JSON.stringify([]))
+      this.user.familiares = JSON.parse(JSON.stringify([]));
       this.user.qr = Object.assign({}, this.defaultUser.qr);
       this.idTrabajador = null;
       this.idFamiliar = 0;
@@ -787,8 +782,8 @@ export default {
     openPreview(item) {
       /*this.getDatosQr(item.idQR)
       this.dialogPreview = true;*/
-      let idQr = item.idQR
-      this.$router.push({ name: 'Visualizar', params: { id: idQr } });
+      let idQr = item.idQR;
+      this.$router.push({ name: "Visualizar", params: { id: idQr } });
     },
     closeDialogPreview() {
       this.dialogPreview = false;
@@ -798,22 +793,21 @@ export default {
       this.ulrUserQr = item.qr.url;
 
       axios
-        .get(this.ulrUserQr, { responseType: 'blob' })
+        .get(this.ulrUserQr, { responseType: "blob" })
         .then((response) => {
           const url = window.URL.createObjectURL(new Blob([response.data]));
 
-          const enlace = document.createElement('a');
+          const enlace = document.createElement("a");
           enlace.href = url;
-          enlace.setAttribute('download', 'nombre_de_archivo.jpg');
+          enlace.setAttribute("download", "nombre_de_archivo.jpg");
 
           enlace.click();
 
           window.URL.revokeObjectURL(url);
         })
         .catch((error) => {
-          console.error('Error al descargar la imagen', error);
+          console.error("Error al descargar la imagen", error);
         });
-
     },
 
     openDialog2() {
@@ -823,7 +817,7 @@ export default {
       this.dialog2 = false;
       //this.$refs.form.reset();
       this.user = Object.assign({}, this.defaultUser);
-      this.user.familiares = []
+      this.user.familiares = [];
       this.idFamiliar = 0;
       this.$refs.form.reset();
     },
@@ -833,7 +827,7 @@ export default {
         const reader = new FileReader();
         reader.onload = (e) => {
           const base64String = e.target.result;
-          this.user.foto = base64String.split(',')[1];
+          this.user.foto = base64String.split(",")[1];
         };
         reader.readAsDataURL(this.fotoBase64);
       }
@@ -843,7 +837,7 @@ export default {
         const reader = new FileReader();
         reader.onload = (e) => {
           const base64String = e.target.result;
-          this.user.qr.urlImagenQR = base64String.split(',')[1];
+          this.user.qr.urlImagenQR = base64String.split(",")[1];
         };
         reader.readAsDataURL(this.qrBase64);
       }
@@ -856,19 +850,19 @@ export default {
         nombre: null,
         apellidoP: null,
         apellidoM: null,
-        edad: null
-      })
+        edad: null,
+      });
     },
     deleteFamiliar(item) {
-      const idx = this.user.familiares.indexOf(item)
-      this.user.familiares.splice(idx, 1)
+      const idx = this.user.familiares.indexOf(item);
+      this.user.familiares.splice(idx, 1);
     },
   },
   mounted() {
-    this.token = localStorage.getItem('token')
+    this.token = localStorage.getItem("token");
     this.mountedComponente();
-  }
-}
+  },
+};
 </script>
   
 <style scoped>

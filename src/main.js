@@ -9,6 +9,15 @@ import axios from 'axios'
 
 Vue.config.productionTip = false
 
+let token = localStorage.getItem('token')
+if (token) {
+    axios.defaults.headers.common['Authorization'] = token;
+}
+
+axios.defaults.baseURL = 'https://aavisor.azurewebsites.net/api';
+axios.defaults.headers.get['Accept'] = 'application/json';
+axios.defaults.headers.common['Content-Type'] = 'application/json';
+
 new Vue({
     router,
     store,
@@ -20,23 +29,13 @@ axios.defaults.transformRequest = [(data) => {
     return JSON.stringify(data);
 }];
 
-axios.defaults.baseURL = 'https://aavisor.azurewebsites.net/api';
-axios.defaults.headers.get['Accept'] = 'application/json';
-axios.defaults.headers.common['Content-Type'] = 'application/json';
 
-let token = localStorage.getItem('token')
 
-if (token) {
-    axios.defaults.headers.common['Authorization'] = token;
-}
 
 axios.interceptors.request.use(config => {
-    let token = localStorage.getItem('token')
-
     if (token) {
         config.headers['Authorization'] = token;
     }
-
     return config;
 });
 
