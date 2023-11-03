@@ -18,12 +18,6 @@ axios.defaults.baseURL = 'https://aavisor.azurewebsites.net/api';
 axios.defaults.headers.get['Accept'] = 'application/json';
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 
-new Vue({
-    router,
-    store,
-    vuetify,
-    render: h => h(App)
-}).$mount('#app')
 
 axios.defaults.transformRequest = [(data) => {
     return JSON.stringify(data);
@@ -40,3 +34,10 @@ axios.interceptors.request.use(config => {
 });
 
 Vue.prototype.$http = axios;
+
+new Vue({
+    router,
+    store,
+    vuetify,
+    render: h => h(App)
+}).$mount('#app')
